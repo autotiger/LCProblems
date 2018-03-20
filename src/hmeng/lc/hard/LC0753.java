@@ -25,6 +25,8 @@ import java.util.Set;
  */
 public class LC0753 {
 
+    //question can be solved using Hamiltonian path or Euler circuit
+    //here is using former which is easier to understand
     public String crackSafe(int n, int k) {
         if (n == 1 && k == 1) return "0";
         //calculate node count
