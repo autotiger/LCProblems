@@ -54,7 +54,7 @@ public class LC0005 {
         //dp[i][j] == true when s(i) == s(j) and
         //  j - i == 0 -> i, j is pointing to the same character, e.g. "a"
         //  j - i == 1 -> i, j are adjacent, e.g. "aa"
-        //  j - i == 2 -> there is only one char between i, j, e.g. "aba"
+        //  j - i == 2 -> there is only one char between i, j, e.g. 
         // or dp[i+1][j-1] is palindrome
         String res = "";
         boolean dp[][] = new boolean[len][len];
