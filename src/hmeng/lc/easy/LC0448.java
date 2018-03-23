@@ -22,9 +22,9 @@ Output:
 [5,6]
  */
 //
-// Keep swapping numbers to its sorted index (number + 1),
-// numbers that appear more than once will be in a wrong index
-// loop again find the missing numbers
+// Keep swapping numbers to its sorted index (number - 1),
+// numbers that appear more than once will be left in array with a wrong index
+// loop again to find the missing numbers
 public class LC0448 {
     public List<Integer> findDisappearedNumbers(int[] nums) {
         int i = 0;
