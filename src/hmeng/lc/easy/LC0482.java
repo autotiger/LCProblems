@@ -36,7 +36,7 @@ public class LC0482 {
         StringBuilder sb = new StringBuilder();
         int counter = 0;
         for (int i = chars.length-1; i >= 0; i--) {
-            sb.append(String.valueOf(chars[i]).toUpperCase());
+            sb.append(String.valueOf(chars[i]));
             if (counter == K-1 && i != 0) {
                 sb.append("-");
                 counter = 0;
