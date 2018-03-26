@@ -7,6 +7,7 @@ import hmeng.lc.common.TreeNode;
 
 public class LC0297 {
     // Encodes a tree to a single string.
+    // used level by level traversal to serialize tree
     public String serialize(TreeNode root) {
         if (root == null) return "";
         Queue<TreeNode> queue = new LinkedList<>();
@@ -72,7 +73,9 @@ public class LC0297 {
         TreeNode node5 = new TreeNode(5);
         node3.left = node4;
         node3.right = node5;
-        System.out.println(lc.deserialize(lc.serialize(root)));
+        String s = lc.serialize(root);
+        System.out.println(s);
+        lc.deserialize(s);
     }
 
 }
