@@ -7,7 +7,7 @@ import java.util.Set;
 
 /*
 288. Unique Word Abbreviation
-DescriptionHintsSubmissionsDiscussSolution
+
 An abbreviation of a word follows the form <first letter><number><last letter>. Below are some examples of word abbreviations:
 
 a) it                      --> it    (no abbreviation)

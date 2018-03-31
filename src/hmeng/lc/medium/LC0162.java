@@ -2,7 +2,7 @@ package hmeng.lc.medium;
 
 /*
 162. Find Peak Element
-DescriptionHintsSubmissionsDiscussSolution
+
 A peak element is an element that is greater than its neighbors.
 
 Given an input array where num[i] != num[i+1], find a peak element and return its index.
