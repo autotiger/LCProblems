@@ -35,6 +35,7 @@ public class LC0300 {
             }
             
             tails[l] = nums[i];
+            System.out.println(Arrays.toString(tails));
             if (l == size) size++;
         }
 
@@ -62,7 +63,7 @@ public class LC0300 {
     
     public static void main(String[] args) {
         LC0300 lc = new LC0300();
-        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+        int[] nums = {100, 101, 1, 2, 3, 4, 5};
         System.out.println(lc.lengthOfLIS(nums));
     }
 
