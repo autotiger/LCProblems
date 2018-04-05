@@ -1,7 +1,5 @@
 package hmeng.lc.easy;
 
-import java.util.Arrays;
-
 /*
 758. Bold Words in String
 
