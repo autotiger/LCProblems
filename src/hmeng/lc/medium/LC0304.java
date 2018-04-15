@@ -28,6 +28,33 @@ You may assume that row1 <= row2 and col1 <= col2.
 */
 public class LC0304 {
 
+    private int[][] dp;
+    
+    private int rowLen;
+    
+    private int colLen;
+    
+    /**
+     * O(mn) - init, O(1) - query
+     */
+    public LC0304(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return;
+        rowLen = matrix.length;
+        colLen = matrix[0].length;
+        dp = new int[rowLen+1][colLen+1];
+        for (int row = 1; row <= rowLen; row++) {
+            for (int col = 1; col <= colLen; col++) {
+                dp[row][col] = dp[row-1][col] + dp[row][col-1] - dp[row-1][col-1] + matrix[row-1][col-1];
+            }
+        }         
+    }
+    
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        //validate row, col
+        return dp[row2+1][col2+1] - dp[row1][col2+1] - dp[row2+1][col1] + dp[row1][col1];
+    }
+    
+    /* O(mn) init, O(m) query
     private int[][] prefixSumMatrix;
     
     public LC0304(int[][] matrix) {
@@ -50,7 +77,7 @@ public class LC0304 {
         }
 
         return sum;
-    }
+    }*/
     
     public static void main(String[] args) {
         int[][] matrix = {
@@ -62,7 +89,7 @@ public class LC0304 {
         };
         LC0304 lc = new LC0304(matrix);
         
-        //System.out.println(lc.sumRegion(row1, col1, row2, col2));
+        System.out.println(lc.sumRegion(2, 1, 4, 3));
     }
 
 }
