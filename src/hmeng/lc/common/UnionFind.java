@@ -40,7 +40,7 @@ public class UnionFind {
     }
     
     public int find(int t) {
-        if (t >= uf.length) throw new IllegalArgumentException("target is not in set");
+        if (t >= uf.length) throw new IllegalArgumentException(String.format("target: %s is not in set", t));
         if (t == uf[t]) return t;
         uf[t] = find(uf[t]);
         return uf[t];
