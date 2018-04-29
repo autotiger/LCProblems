@@ -27,6 +27,30 @@ Your output answer is guaranteed to be fitted in a 32-bit integer.
 public class LC0494 {
 
     /*
+     * dp, O(n*L), L = sum of all nums
+     */
+    public int findTargetSumWays2(int[] nums, int S) {
+        if (nums == null || nums.length == 0) return 0;
+        int sum = 0;
+        for (int num : nums) sum += num;
+        if (sum < S || (sum + S) % 2 != 0) return 0; 
+        
+        return subsetSum(nums, (sum + S)/2);
+    }
+
+    private int subsetSum(int[] nums, int sum) {
+        int[] dp = new int[sum+1];
+        dp[0] = 1;
+        for (int num : nums) {
+            for (int i = sum; i >= num; i--) {
+                dp[i] += dp[i-num];
+            }
+        }
+        
+        return dp[sum];
+    }
+    
+    /*
      * dfs, O(2^n)
      */
     private int ans = 0;
