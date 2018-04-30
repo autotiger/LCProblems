@@ -1,7 +1,5 @@
 package hmeng.lc.medium;
 
-import java.util.Arrays;
-
 /*
 416. Partition Equal Subset Sum
 
