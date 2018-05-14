@@ -1,6 +1,6 @@
 package hmeng.lc.hard;
 
-import java.util.TreeSet;
+import hmeng.lc.common.BIT;
 
 /*
 683. K Empty Slots
@@ -33,7 +33,31 @@ Note:
 The given array will be in the range [1, 20000].
  */
 public class LC0683 {
-
+   
+    /*
+     * Binary indexed tree, O(nlogn)
+     */
+    public int kEmptySlots(int[] flowers, int k) {
+        int size = flowers.length;
+        BIT bit = new BIT(size);
+        int[] dp = new int[size+1];
+        for (int i = 0; i < flowers.length; i++) {
+            bit.update(flowers[i], 1);
+            dp[flowers[i]] = 1;
+            if (flowers[i] - k -1 > 0 && dp[flowers[i] - k -1] == 1) {
+                if (bit.query(flowers[i]-1) - bit.query(flowers[i] - k -1) == 0)
+                    return i+1;
+            }
+            
+            if (flowers[i] + k + 1 <= size && dp[flowers[i] + k + 1] == 1) {
+                if (bit.query(flowers[i]+k) - bit.query(flowers[i]) == 0)
+                    return i+1;
+            }
+        }
+        
+        return -1;
+    }
+    /* TreeSet, O(nlogn)
     public int kEmptySlots(int[] flowers, int k) {
         if (flowers == null || flowers.length < 2 | k < 0) return -1;
         TreeSet<Integer> ts = new TreeSet<>();
@@ -50,7 +74,8 @@ public class LC0683 {
         }
         
         return -1;
-    }
+    } */
+    
     /* TLE O(n^2)
     public int kEmptySlots(int[] flowers, int k) {
         if (flowers == null || flowers.length < 2 | k < 0) return -1;
@@ -74,8 +99,10 @@ public class LC0683 {
     } */
     
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
+        LC0683 lc = new LC0683();
+        int[] flowers = new int[] {1,2,3};
+        int k = 1;
+        System.out.println(lc.kEmptySlots(flowers, k));
     }
 
 }
