@@ -2,9 +2,7 @@ package hmeng.lc.medium;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /*
 399. Evaluate Division
@@ -27,6 +25,77 @@ The input is always valid. You may assume that evaluating the queries will resul
 */
 public class LC0399 {
 
+    private static class Node {
+        Node parent = this;
+        double val = 1.0;
+        String var;
+        Node(String var, double val) {
+            this.var = var;
+            this.val = val;
+        }
+    }
+    
+    public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
+        Map<String, Node> uf = new HashMap<>();
+        
+        for (int i = 0; i < equations.length; i++) {
+            String var1 = equations[i][0], var2 = equations[i][1];
+            if (!uf.containsKey(var1) && !uf.containsKey(var2)) {
+                Node n1 = new Node(var1, values[i]);
+                Node n2 = new Node(var2, 1.0);
+                uf.put(var1, n1);
+                uf.put(var2, n2);
+                n1.parent = n2;
+            } else if (!uf.containsKey(var2)) {
+                Node n1 = uf.get(var1);
+                Node n2 = new Node(var2, n1.val/values[i]);
+                uf.put(var2, n2);
+                n2.parent = n1;
+            } else if (!uf.containsKey(var1)) {
+                Node n2 = uf.get(var2);
+                Node n1 = new Node(var1, values[i] * n2.val);
+                uf.put(var1, n1);
+                n1.parent = n2;
+            } else {
+                union(uf, var1, var2, values[i]);
+            }
+        }
+        
+        double[] res = new double[queries.length];
+        Arrays.fill(res, -1);
+        for (int i = 0; i < queries.length; i++) {
+            String[] query = queries[i];
+            String var1 = query[0], var2 = query[1];
+            if (uf.containsKey(var1) && uf.containsKey(var2) && find(uf, var1) == find(uf, var2)) {
+                Node n1 = uf.get(var1), n2 = uf.get(var2);
+                res[i] = n1.val / n2.val;
+            }
+        }
+        
+        return res;
+    }
+    
+    private boolean union(Map<String, Node> uf, String var1, String var2, double value) {
+        Node pn1 = find(uf, var1), pn2 = find(uf, var2);
+        if (pn1 == pn2) return false;
+        double v = value * uf.get(var2).val / uf.get(var1).val;
+        for (Node node : uf.values()) {
+            if (find(uf, node.var) == pn1) {
+                node.val *= v;
+            }
+        }
+        
+        pn1.parent = pn2;
+        return true;
+    }
+    
+    private Node find(Map<String, Node> uf, String var) {
+        Node node = uf.get(var);
+        if (node.parent == node) return node;
+        node.parent = find(uf, node.parent.var);
+        return node.parent;
+    }
+    /*
     private static class Node {
         String key;
         double val;
@@ -65,6 +134,8 @@ public class LC0399 {
         visited.remove(start);
         return -1.0;
     }
+    
+    */
 /*    public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
         Map<String, Integer> map = new HashMap<>();
         int index = 0;
@@ -144,10 +215,10 @@ public class LC0399 {
 */    
     public static void main(String[] args) {
         LC0399 lc = new LC0399();
-        String[][] equations = { {"x1","x2"},{"x2","x3"}, {"x3","x4"}, {"x4","x5"}};
-        double[] values = {3.0, 4.0, 5.0, 6.0};
+        String[][] equations = {{"a","b"},{"e","f"},{"b","e"}}; 
+        double[] values = {3.4,1.4,2.3};
         //String[][] queries = {{"x1","x5"},{"x5","x2"},{"x2","x4"},{"x2","x2"},{"x2","x9"},{"x9","x9"}};
-        String[][] queries = {{"x2","x4"}};
+        String[][] queries = {{"b","a"},{"a","f"},{"f","f"},{"e","e"},{"c","c"},{"a","c"},{"f","e"}};
         System.out.println(Arrays.toString(lc.calcEquation(equations, values, queries)));
     }
 
